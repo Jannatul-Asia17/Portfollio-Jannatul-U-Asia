@@ -63,6 +63,12 @@ The sample project cards describe a balanced, recruiter-friendly set. Build them
 | A/B Test | [A/B testing dataset](https://www.kaggle.com/datasets/zhangluyuan/ab-testing) | Python, SciPy |
 | HR Attrition | [IBM HR Attrition](https://www.kaggle.com/datasets/pavansubhasht/ibm-hr-analytics-attrition-dataset) | Tableau |
 
+## Projects in this repo
+
+| Project | What it is |
+|---|---|
+| [`projects/retail-sales-dax`](projects/retail-sales-dax) | Power BI + DAX sales model: star schema, 60 measures, calculation group, Power Query cleaning, and a Python answer key that checks every measure |
+
 ## File structure
 
 ```
@@ -72,4 +78,5 @@ assets/js/data.js     ← ALL your content lives here
 assets/js/charts.js   tiny SVG chart library (line, bar, mini charts)
 assets/js/main.js     renders content, live demo, interactions
 .nojekyll             tells GitHub Pages to serve files as-is
+projects/             full project write-ups, code and data
 ```

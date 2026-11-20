@@ -1,0 +1,289 @@
+MonthStart,Region,Category,SalesTarget
+2024-01-01,Central,Furniture,4400.0
+2024-01-01,Central,Office Supplies,2300.0
+2024-01-01,Central,Technology,1000.0
+2024-01-01,East,Furniture,7000.0
+2024-01-01,East,Office Supplies,6100.0
+2024-01-01,East,Technology,1000.0
+2024-01-01,South,Furniture,4600.0
+2024-01-01,South,Office Supplies,1700.0
+2024-01-01,South,Technology,1400.0
+2024-01-01,West,Furniture,20500.0
+2024-01-01,West,Office Supplies,11300.0
+2024-01-01,West,Technology,13200.0
+2024-02-01,Central,Furniture,6700.0
+2024-02-01,Central,Office Supplies,1300.0
+2024-02-01,Central,Technology,5600.0
+2024-02-01,East,Furniture,10800.0
+2024-02-01,East,Office Supplies,4800.0
+2024-02-01,East,Technology,6100.0
+2024-02-01,South,Furniture,9100.0
+2024-02-01,South,Office Supplies,3400.0
+2024-02-01,South,Technology,1900.0
+2024-02-01,West,Furniture,9300.0
+2024-02-01,West,Office Supplies,6000.0
+2024-02-01,West,Technology,1400.0
+2024-03-01,Central,Furniture,21200.0
+2024-03-01,Central,Office Supplies,7300.0
+2024-03-01,Central,Technology,2200.0
+2024-03-01,East,Furniture,5000.0
+2024-03-01,East,Office Supplies,6300.0
+2024-03-01,East,Technology,7200.0
+2024-03-01,South,Furniture,1900.0
+2024-03-01,South,Office Supplies,5400.0
+2024-03-01,South,Technology,2600.0
+2024-03-01,West,Furniture,16000.0
+2024-03-01,West,Office Supplies,6200.0
+2024-03-01,West,Technology,19100.0
+2024-04-01,Central,Furniture,6600.0
+2024-04-01,Central,Office Supplies,5800.0
+2024-04-01,Central,Technology,22800.0
+2024-04-01,East,Furniture,4600.0
+2024-04-01,East,Office Supplies,2500.0
+2024-04-01,East,Technology,11800.0
+2024-04-01,South,Furniture,4800.0
+2024-04-01,South,Office Supplies,1600.0
+2024-04-01,South,Technology,6900.0
+2024-04-01,West,Furniture,13500.0
+2024-04-01,West,Office Supplies,5600.0
+2024-04-01,West,Technology,7600.0
+2024-05-01,Central,Furniture,6700.0
+2024-05-01,Central,Office Supplies,3300.0
+2024-05-01,Central,Technology,9000.0
+2024-05-01,East,Furniture,3700.0
+2024-05-01,East,Office Supplies,5100.0
+2024-05-01,East,Technology,5100.0
+2024-05-01,South,Furniture,4400.0
+2024-05-01,South,Office Supplies,4300.0
+2024-05-01,South,Technology,6100.0
+2024-05-01,West,Furniture,12100.0
+2024-05-01,West,Office Supplies,5600.0
+2024-05-01,West,Technology,4600.0
+2024-06-01,Central,Furniture,9100.0
+2024-06-01,Central,Office Supplies,7100.0
+2024-06-01,Central,Technology,4100.0
+2024-06-01,East,Furniture,10900.0
+2024-06-01,East,Office Supplies,3600.0
+2024-06-01,East,Technology,18100.0
+2024-06-01,South,Furniture,5800.0
+2024-06-01,South,Office Supplies,3200.0
+2024-06-01,South,Technology,800.0
+2024-06-01,West,Furniture,10500.0
+2024-06-01,West,Office Supplies,6300.0
+2024-06-01,West,Technology,12500.0
+2024-07-01,Central,Furniture,1800.0
+2024-07-01,Central,Office Supplies,4500.0
+2024-07-01,Central,Technology,15000.0
+2024-07-01,East,Furniture,8300.0
+2024-07-01,East,Office Supplies,8900.0
+2024-07-01,East,Technology,21600.0
+2024-07-01,South,Furniture,2200.0
+2024-07-01,South,Office Supplies,2600.0
+2024-07-01,South,Technology,2700.0
+2024-07-01,West,Furniture,20400.0
+2024-07-01,West,Office Supplies,6700.0
+2024-07-01,West,Technology,8000.0
+2024-08-01,Central,Furniture,7000.0
+2024-08-01,Central,Office Supplies,2900.0
+2024-08-01,Central,Technology,10600.0
+2024-08-01,East,Furniture,9100.0
+2024-08-01,East,Office Supplies,3200.0
+2024-08-01,East,Technology,9000.0
+2024-08-01,South,Furniture,11200.0
+2024-08-01,South,Office Supplies,3500.0
+2024-08-01,South,Technology,6300.0
+2024-08-01,West,Furniture,14500.0
+2024-08-01,West,Office Supplies,6000.0
+2024-08-01,West,Technology,4900.0
+2024-09-01,Central,Furniture,15700.0
+2024-09-01,Central,Office Supplies,10400.0
+2024-09-01,Central,Technology,5900.0
+2024-09-01,East,Furniture,9100.0
+2024-09-01,East,Office Supplies,4300.0
+2024-09-01,East,Technology,5300.0
+2024-09-01,South,Furniture,8900.0
+2024-09-01,South,Office Supplies,3100.0
+2024-09-01,South,Technology,20200.0
+2024-09-01,West,Furniture,13700.0
+2024-09-01,West,Office Supplies,10000.0
+2024-09-01,West,Technology,13900.0
+2024-10-01,Central,Furniture,11200.0
+2024-10-01,Central,Office Supplies,4900.0
+2024-10-01,Central,Technology,700.0
+2024-10-01,East,Furniture,7600.0
+2024-10-01,East,Office Supplies,4700.0
+2024-10-01,East,Technology,1300.0
+2024-10-01,South,Furniture,10100.0
+2024-10-01,South,Office Supplies,4700.0
+2024-10-01,South,Technology,4000.0
+2024-10-01,West,Furniture,8600.0
+2024-10-01,West,Office Supplies,6400.0
+2024-10-01,West,Technology,14600.0
+2024-11-01,Central,Furniture,19900.0
+2024-11-01,Central,Office Supplies,5400.0
+2024-11-01,Central,Technology,8300.0
+2024-11-01,East,Furniture,19200.0
+2024-11-01,East,Office Supplies,5000.0
+2024-11-01,East,Technology,7300.0
+2024-11-01,South,Furniture,17300.0
+2024-11-01,South,Office Supplies,13400.0
+2024-11-01,South,Technology,8400.0
+2024-11-01,West,Furniture,18500.0
+2024-11-01,West,Office Supplies,8600.0
+2024-11-01,West,Technology,34200.0
+2024-12-01,Central,Furniture,15700.0
+2024-12-01,Central,Office Supplies,7300.0
+2024-12-01,Central,Technology,6100.0
+2024-12-01,East,Furniture,10600.0
+2024-12-01,East,Office Supplies,9200.0
+2024-12-01,East,Technology,15800.0
+2024-12-01,South,Furniture,10700.0
+2024-12-01,South,Office Supplies,6800.0
+2024-12-01,South,Technology,14700.0
+2024-12-01,West,Furniture,12700.0
+2024-12-01,West,Office Supplies,10300.0
+2024-12-01,West,Technology,20800.0
+2025-01-01,Central,Furniture,12700.0
+2025-01-01,Central,Office Supplies,4900.0
+2025-01-01,Central,Technology,3900.0
+2025-01-01,East,Furniture,10900.0
+2025-01-01,East,Office Supplies,3500.0
+2025-01-01,East,Technology,4500.0
+2025-01-01,South,Furniture,3600.0
+2025-01-01,South,Office Supplies,5200.0
+2025-01-01,South,Technology,4600.0
+2025-01-01,West,Furniture,4000.0
+2025-01-01,West,Office Supplies,4500.0
+2025-01-01,West,Technology,4400.0
+2025-02-01,Central,Furniture,3900.0
+2025-02-01,Central,Office Supplies,4200.0
+2025-02-01,Central,Technology,3900.0
+2025-02-01,East,Furniture,3300.0
+2025-02-01,East,Office Supplies,3600.0
+2025-02-01,East,Technology,7400.0
+2025-02-01,South,Furniture,700.0
+2025-02-01,South,Office Supplies,1500.0
+2025-02-01,South,Technology,800.0
+2025-02-01,West,Furniture,7700.0
+2025-02-01,West,Office Supplies,5900.0
+2025-02-01,West,Technology,5500.0
+2025-03-01,Central,Furniture,7600.0
+2025-03-01,Central,Office Supplies,4900.0
+2025-03-01,Central,Technology,7700.0
+2025-03-01,East,Furniture,9700.0
+2025-03-01,East,Office Supplies,6200.0
+2025-03-01,East,Technology,3900.0
+2025-03-01,South,Furniture,7800.0
+2025-03-01,South,Office Supplies,3200.0
+2025-03-01,South,Technology,6800.0
+2025-03-01,West,Furniture,7100.0
+2025-03-01,West,Office Supplies,7400.0
+2025-03-01,West,Technology,16600.0
+2025-04-01,Central,Furniture,12200.0
+2025-04-01,Central,Office Supplies,4000.0
+2025-04-01,Central,Technology,8900.0
+2025-04-01,East,Furniture,8500.0
+2025-04-01,East,Office Supplies,2900.0
+2025-04-01,East,Technology,3500.0
+2025-04-01,South,Furniture,6200.0
+2025-04-01,South,Office Supplies,3600.0
+2025-04-01,South,Technology,13100.0
+2025-04-01,West,Furniture,5200.0
+2025-04-01,West,Office Supplies,9700.0
+2025-04-01,West,Technology,7900.0
+2025-05-01,Central,Furniture,6000.0
+2025-05-01,Central,Office Supplies,5100.0
+2025-05-01,Central,Technology,10400.0
+2025-05-01,East,Furniture,7600.0
+2025-05-01,East,Office Supplies,9600.0
+2025-05-01,East,Technology,9400.0
+2025-05-01,South,Furniture,8300.0
+2025-05-01,South,Office Supplies,8400.0
+2025-05-01,South,Technology,1700.0
+2025-05-01,West,Furniture,11200.0
+2025-05-01,West,Office Supplies,9700.0
+2025-05-01,West,Technology,10800.0
+2025-06-01,Central,Furniture,17500.0
+2025-06-01,Central,Office Supplies,4500.0
+2025-06-01,Central,Technology,11600.0
+2025-06-01,East,Furniture,7700.0
+2025-06-01,East,Office Supplies,5000.0
+2025-06-01,East,Technology,6400.0
+2025-06-01,South,Furniture,15100.0
+2025-06-01,South,Office Supplies,6300.0
+2025-06-01,South,Technology,17900.0
+2025-06-01,West,Furniture,11500.0
+2025-06-01,West,Office Supplies,9500.0
+2025-06-01,West,Technology,3800.0
+2025-07-01,Central,Furniture,9400.0
+2025-07-01,Central,Office Supplies,6200.0
+2025-07-01,Central,Technology,24300.0
+2025-07-01,East,Furniture,6800.0
+2025-07-01,East,Office Supplies,7900.0
+2025-07-01,East,Technology,14100.0
+2025-07-01,South,Furniture,4400.0
+2025-07-01,South,Office Supplies,5200.0
+2025-07-01,South,Technology,2400.0
+2025-07-01,West,Furniture,8600.0
+2025-07-01,West,Office Supplies,8500.0
+2025-07-01,West,Technology,7500.0
+2025-08-01,Central,Furniture,6500.0
+2025-08-01,Central,Office Supplies,3500.0
+2025-08-01,Central,Technology,3500.0
+2025-08-01,East,Furniture,10000.0
+2025-08-01,East,Office Supplies,4200.0
+2025-08-01,East,Technology,22000.0
+2025-08-01,South,Furniture,8300.0
+2025-08-01,South,Office Supplies,3300.0
+2025-08-01,South,Technology,900.0
+2025-08-01,West,Furniture,8300.0
+2025-08-01,West,Office Supplies,12700.0
+2025-08-01,West,Technology,14700.0
+2025-09-01,Central,Furniture,14000.0
+2025-09-01,Central,Office Supplies,9400.0
+2025-09-01,Central,Technology,8900.0
+2025-09-01,East,Furniture,12000.0
+2025-09-01,East,Office Supplies,9300.0
+2025-09-01,East,Technology,10600.0
+2025-09-01,South,Furniture,18800.0
+2025-09-01,South,Office Supplies,8600.0
+2025-09-01,South,Technology,16600.0
+2025-09-01,West,Furniture,8300.0
+2025-09-01,West,Office Supplies,9200.0
+2025-09-01,West,Technology,6300.0
+2025-10-01,Central,Furniture,5500.0
+2025-10-01,Central,Office Supplies,5200.0
+2025-10-01,Central,Technology,7300.0
+2025-10-01,East,Furniture,6600.0
+2025-10-01,East,Office Supplies,6100.0
+2025-10-01,East,Technology,2500.0
+2025-10-01,South,Furniture,2800.0
+2025-10-01,South,Office Supplies,2500.0
+2025-10-01,South,Technology,3200.0
+2025-10-01,West,Furniture,17700.0
+2025-10-01,West,Office Supplies,13400.0
+2025-10-01,West,Technology,13200.0
+2025-11-01,Central,Furniture,11400.0
+2025-11-01,Central,Office Supplies,8900.0
+2025-11-01,Central,Technology,6600.0
+2025-11-01,East,Furniture,7900.0
+2025-11-01,East,Office Supplies,4900.0
+2025-11-01,East,Technology,12900.0
+2025-11-01,South,Furniture,7000.0
+2025-11-01,South,Office Supplies,6200.0
+2025-11-01,South,Technology,10900.0
+2025-11-01,West,Furniture,18300.0
+2025-11-01,West,Office Supplies,11200.0
+2025-11-01,West,Technology,12700.0
+2025-12-01,Central,Furniture,20400.0
+2025-12-01,Central,Office Supplies,8000.0
+2025-12-01,Central,Technology,10500.0
+2025-12-01,East,Furniture,15600.0
+2025-12-01,East,Office Supplies,8000.0
+2025-12-01,East,Technology,31300.0
+2025-12-01,South,Furniture,18800.0
+2025-12-01,South,Office Supplies,5500.0
+2025-12-01,South,Technology,10800.0
+2025-12-01,West,Furniture,16300.0
+2025-12-01,West,Office Supplies,9500.0
+2025-12-01,West,Technology,11700.0

@@ -120,11 +120,11 @@ const PORTFOLIO = {
         "Interactive Power BI dashboard tracking revenue, profit margin and returns across regions, categories and time for a US superstore.",
       problem: "Managers had no single view of which regions and product lines were losing margin.",
       approach:
-        "Cleaned 10k orders in Power Query, built a star schema (fact_sales + 4 dimensions), wrote DAX measures for YoY growth and margin %, and designed a drill-through from region to product.",
+        "Cleaned 11k order lines in Power Query, built a star schema (fact + 4 dimensions + DAX date table) and wrote 60 DAX measures: time intelligence, TREATAS virtual relationships, a discount what-if parameter, dynamic Top N, Pareto and new vs returning customers. Every measure is checked against an independent Python answer key.",
       result:
-        "[Your key finding, e.g. 'Discounts above 20% made the Furniture category unprofitable in 3 regions.']",
+        "Discounts above 20% were loss-making (-25.8% margin above 30%); capping them at 20% is worth up to +3.2% profit. Central region discounts the most and was the only region below target.",
       tools: ["Power BI", "DAX", "Power Query", "Data modelling"],
-      links: { code: "https://github.com/jannatul-asia17", demo: "" },
+      links: { code: "https://github.com/jannatul-asia17/Portfollio-Jannatul-U-Asia/tree/main/projects/retail-sales-dax", demo: "" },
       viz: { type: "line", data: [42, 45, 44, 51, 49, 56, 61, 58, 64, 70, 76, 83] },
       featured: true,
     },

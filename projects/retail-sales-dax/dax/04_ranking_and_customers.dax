@@ -1,0 +1,128 @@
+// =============================================================================
+// 04 · Ranking, Pareto & customers          Display folders: 4 Ranking / 5 Customers
+// =============================================================================
+DEFINE
+    // --- Ranking ------------------------------------------------------------
+    // ISINSCOPE: only rank on product rows, so the Total row stays blank.
+    // ALLSELECTED: rank among the products the user can see, not the whole
+    // catalogue. With a Category slicer it becomes "rank within category".
+    MEASURE _Measures[Product Sales Rank] =
+        IF (
+            ISINSCOPE ( DimProduct[ProductName] ),
+            RANKX ( ALLSELECTED ( DimProduct[ProductName] ), [Total Sales], , DESC, DENSE )
+        )
+
+    // --- Dynamic Top N (driven by the disconnected 'Top N' slicer) ----------
+    MEASURE _Measures[Top N Value] = SELECTEDVALUE ( 'Top N'[Top N], 10 )
+
+    // TOPN returns a TABLE of the best N product names. KEEPFILTERS intersects
+    // it with the current row, so each product row shows its sales only if it
+    // is in the top N, and the total shows the top-N total.
+    MEASURE _Measures[Top N Sales] =
+        VAR _n = [Top N Value]
+        VAR _topProducts =
+            TOPN ( _n, ALLSELECTED ( DimProduct[ProductName] ), [Total Sales] )
+        RETURN
+            CALCULATE ( [Total Sales], KEEPFILTERS ( _topProducts ) )
+
+    MEASURE _Measures[Top N Share %] =
+        DIVIDE ( [Top N Sales], CALCULATE ( [Total Sales], ALLSELECTED ( DimProduct ) ) )
+
+    // --- Pareto (80/20) -------------------------------------------------------
+    // Build a virtual table of every visible product and its sales once
+    // (ADDCOLUMNS), then sum the products that sell at least as much as this one.
+    MEASURE _Measures[Cumulative Sales %] =
+        VAR _currentSales = [Total Sales]
+        VAR _products =
+            ADDCOLUMNS ( ALLSELECTED ( DimProduct[ProductName] ), "@Sales", [Total Sales] )
+        VAR _cumulative = SUMX ( FILTER ( _products, [@Sales] >= _currentSales ), [@Sales] )
+        VAR _total = SUMX ( _products, [@Sales] )
+        RETURN
+            IF (
+                ISINSCOPE ( DimProduct[ProductName] ) && NOT ISBLANK ( _currentSales ),
+                DIVIDE ( _cumulative, _total )
+            )
+
+    // How many products does it take to reach 80% of sales? A product is
+    // needed if the products ranked above it are still short of 80%.
+    MEASURE _Measures[Products for 80% of Sales] =
+        VAR _products =
+            ADDCOLUMNS ( ALLSELECTED ( DimProduct[ProductName] ), "@Sales", [Total Sales] )
+        VAR _total = SUMX ( _products, [@Sales] )
+        VAR _withCumulative =
+            ADDCOLUMNS (
+                _products,
+                "@Cumulative",
+                    VAR _thisSales = [@Sales]
+                    RETURN SUMX ( FILTER ( _products, [@Sales] >= _thisSales ), [@Sales] )
+            )
+        RETURN
+            COUNTROWS (
+                FILTER ( _withCumulative, [@Cumulative] - [@Sales] < 0.8 * _total )
+            )
+
+    // --- Share of total -----------------------------------------------------
+    MEASURE _Measures[% of Total Sales] =
+        DIVIDE ( [Total Sales], CALCULATE ( [Total Sales], ALLSELECTED () ) )
+
+    // --- Customers: new vs returning -----------------------------------------
+    // For each customer visible in the period, find their FIRST order date
+    // ever (REMOVEFILTERS ( 'Date' ) ignores the period). They are "new"
+    // if that first order falls inside the period being shown.
+    MEASURE _Measures[New Customers] =
+        VAR _periodStart = MIN ( 'Date'[Date] )
+        VAR _periodEnd   = MAX ( 'Date'[Date] )
+        VAR _customersWithFirstOrder =
+            ADDCOLUMNS (
+                VALUES ( FactSales[CustomerID] ),
+                "@FirstOrder", CALCULATE ( MIN ( FactSales[OrderDate] ), REMOVEFILTERS ( 'Date' ) )
+            )
+        RETURN
+            COUNTROWS (
+                FILTER (
+                    _customersWithFirstOrder,
+                    [@FirstOrder] >= _periodStart && [@FirstOrder] <= _periodEnd
+                )
+            )
+
+    MEASURE _Measures[Returning Customers] = [Customers] - [New Customers]
+
+    MEASURE _Measures[Repeat Customers] =
+        COUNTROWS ( FILTER ( VALUES ( FactSales[CustomerID] ), [Orders] > 1 ) )
+
+    MEASURE _Measures[Repeat Customer Rate %] =
+        DIVIDE ( [Repeat Customers], [Customers] )
+
+// ---- Test query 1: top 10 products (expected_results.md section 8) ---------
+EVALUATE
+TOPN (
+    10,
+    SUMMARIZECOLUMNS (
+        DimProduct[ProductName],
+        "Total Sales",        [Total Sales],
+        "Product Sales Rank", [Product Sales Rank],
+        "Cumulative Sales %", [Cumulative Sales %]
+    ),
+    [Total Sales], DESC
+)
+ORDER BY [Total Sales] DESC
+
+// ---- Test query 2: Pareto count & Top N share ------------------------------
+EVALUATE
+ROW (
+    "Products for 80% of Sales", [Products for 80% of Sales],
+    "Top N Sales (N = 10)",      [Top N Sales],
+    "Top N Share %",             [Top N Share %]
+)
+
+// ---- Test query 3: customers by year (section 2) ---------------------------
+EVALUATE
+SUMMARIZECOLUMNS (
+    'Date'[Year],
+    "Customers",              [Customers],
+    "New Customers",          [New Customers],
+    "Returning Customers",    [Returning Customers],
+    "Repeat Customers",       [Repeat Customers],
+    "Repeat Customer Rate %", [Repeat Customer Rate %]
+)
+ORDER BY 'Date'[Year]

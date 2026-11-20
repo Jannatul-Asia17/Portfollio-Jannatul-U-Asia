@@ -1,0 +1,22 @@
+GeographyKey,City,State,Region,Country
+1,Los Angeles,California,West,United States
+2,San Francisco,California,West,United States
+3,Seattle,Washington,West,United States
+4,Portland,Oregon,West,United States
+5,Denver,Colorado,West,United States
+6,Phoenix,Arizona,West,United States
+7,New York City,New York,East,United States
+8,Philadelphia,Pennsylvania,East,United States
+9,Boston,Massachusetts,East,United States
+10,Columbus,Ohio,East,United States
+11,Newark,New Jersey,East,United States
+12,Chicago,Illinois,Central,United States
+13,Houston,Texas,Central,United States
+14,Dallas,Texas,Central,United States
+15,Detroit,Michigan,Central,United States
+16,Minneapolis,Minnesota,Central,United States
+17,Atlanta,Georgia,South,United States
+18,Miami,Florida,South,United States
+19,Nashville,Tennessee,South,United States
+20,Charlotte,North Carolina,South,United States
+21,New Orleans,Louisiana,South,United States
