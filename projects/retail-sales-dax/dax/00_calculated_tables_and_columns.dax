@@ -1,0 +1,106 @@
+// =============================================================================
+// 00 · Calculated tables & columns
+// -----------------------------------------------------------------------------
+// These are part of the model itself, so they are created with the ribbon
+// (Modeling > New table / New column), not in DAX query view.
+// Create them in this order, then follow the "after creating" notes.
+// =============================================================================
+
+
+// ---------------------------------------------------------------------------
+// TABLE  'Date'      (Modeling > New table)
+// A continuous calendar that covers every order year, Jan 1 to Dec 31.
+// Time-intelligence functions (SAMEPERIODLASTYEAR, TOTALYTD, ...) need a
+// gap-free date table, so never rely on the dates found in the fact table.
+// After creating:
+//   * Table tools > Mark as date table > 'Date'[Date]
+//   * Sort [Month] by [Month Number], [Weekday] by [Weekday Number]
+//   * Relationships: FactSales[OrderDate] -> 'Date'[Date]  (active)
+//                    FactSales[ShipDate]  -> 'Date'[Date]  (INACTIVE)
+// ---------------------------------------------------------------------------
+Date =
+VAR _firstYear = YEAR ( MIN ( FactSales[OrderDate] ) )
+VAR _lastYear  = YEAR ( MAX ( FactSales[OrderDate] ) )
+RETURN
+    ADDCOLUMNS (
+        CALENDAR ( DATE ( _firstYear, 1, 1 ), DATE ( _lastYear, 12, 31 ) ),
+        "Year",           YEAR ( [Date] ),
+        "Quarter",        "Q" & QUARTER ( [Date] ),
+        "Year Quarter",   YEAR ( [Date] ) & " Q" & QUARTER ( [Date] ),
+        "Month Number",   MONTH ( [Date] ),
+        "Month",          FORMAT ( [Date], "MMM" ),
+        "Year Month",     FORMAT ( [Date], "YYYY-MM" ),
+        "Month Start",    DATE ( YEAR ( [Date] ), MONTH ( [Date] ), 1 ),
+        "Weekday Number", WEEKDAY ( [Date], 2 ),          // 1 = Monday
+        "Weekday",        FORMAT ( [Date], "ddd" ),
+        "Is Weekend",     WEEKDAY ( [Date], 2 ) > 5
+    )
+
+
+// ---------------------------------------------------------------------------
+// TABLE  _Measures   (Home > Enter data > name it _Measures > Load)
+// A dedicated home table for every measure keeps the field list tidy.
+// Enter data creates a dummy "Column1": hide it. Once the table only holds
+// measures, Power BI pins it to the top of the Data pane.
+// ---------------------------------------------------------------------------
+
+
+// ---------------------------------------------------------------------------
+// TABLE  'Top N'     (Modeling > New table)  Disconnected slicer table
+// Drives [Top N Sales]. Use it in a slicer set to "Single select".
+// ---------------------------------------------------------------------------
+Top N =
+SELECTCOLUMNS ( GENERATESERIES ( 5, 25, 5 ), "Top N", [Value] )
+
+
+// ---------------------------------------------------------------------------
+// TABLE  'Discount Cap'   (Modeling > New table)  What-if parameter
+// "What would profit be if no discount went above X %?"
+// Built from whole numbers then divided, to avoid floating-point keys
+// like 0.15000000000000002. Format the column as Percentage.
+// ---------------------------------------------------------------------------
+Discount Cap =
+SELECTCOLUMNS ( GENERATESERIES ( 0, 50, 5 ), "Discount Cap", [Value] / 100 )
+
+
+// ---------------------------------------------------------------------------
+// COLUMN  FactSales[Discount Band]   (select FactSales > New column)
+// Groups the raw discount into bands for the "profit by discount" analysis.
+// SWITCH ( TRUE (), ... ) is DAX's readable if / else-if chain.
+// ---------------------------------------------------------------------------
+Discount Band =
+SWITCH (
+    TRUE (),
+    FactSales[Discount] = 0,     "0%",
+    FactSales[Discount] <= 0.10, "1-10%",
+    FactSales[Discount] <= 0.20, "11-20%",
+    FactSales[Discount] <= 0.30, "21-30%",
+    "Over 30%"
+)
+
+
+// ---------------------------------------------------------------------------
+// COLUMN  FactSales[Discount Band Sort]
+// After creating: select [Discount Band] > Column tools > Sort by column >
+// [Discount Band Sort], so the bands show 0% to Over 30% and not alphabetically.
+// Then hide this column.
+// ---------------------------------------------------------------------------
+Discount Band Sort =
+SWITCH (
+    TRUE (),
+    FactSales[Discount] = 0,     1,
+    FactSales[Discount] <= 0.10, 2,
+    FactSales[Discount] <= 0.20, 3,
+    FactSales[Discount] <= 0.30, 4,
+    5
+)
+
+
+// ---------------------------------------------------------------------------
+// COLUMN  FactSales[Days to Ship]
+// A row-level value that is aggregated later ([Avg Days to Ship]).
+// A calculated column is right here because the value is fixed per row and
+// we want to slice by it; anything that should react to filters is a measure.
+// ---------------------------------------------------------------------------
+Days to Ship =
+DATEDIFF ( FactSales[OrderDate], FactSales[ShipDate], DAY )

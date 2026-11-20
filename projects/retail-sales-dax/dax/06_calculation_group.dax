@@ -1,0 +1,57 @@
+// =============================================================================
+// 06 · Calculation group: Time Comparison                       (optional, advanced)
+// -----------------------------------------------------------------------------
+// Instead of writing PY / YoY / YTD versions of every measure (Sales PY,
+// Profit PY, Orders PY, ...), one calculation group applies the time logic
+// to WHATEVER measure is on the visual: SELECTEDMEASURE().
+//
+// Create it in Power BI Desktop: Model view > Calculation group
+// (or in Tabular Editor). Table name: 'Time Comparison', column: [Comparison].
+// Add the items below in this order (Ordinal 0-5). Put [Comparison] on the
+// columns of a matrix and any base measure in values.
+//
+// Note: once a model has a calculation group, Power BI turns off implicit
+// measures (dragging a raw numeric column into a visual). That's fine here
+// because this model only uses explicit measures.
+// =============================================================================
+
+
+// ---- Item 0: Current ------------------------------------------------------
+SELECTEDMEASURE ()
+
+
+// ---- Item 1: PY -------------------------------------------------------------
+CALCULATE ( SELECTEDMEASURE (), SAMEPERIODLASTYEAR ( 'Date'[Date] ) )
+
+
+// ---- Item 2: YoY ------------------------------------------------------------
+VAR _current = SELECTEDMEASURE ()
+VAR _prior   = CALCULATE ( SELECTEDMEASURE (), SAMEPERIODLASTYEAR ( 'Date'[Date] ) )
+RETURN
+    IF ( NOT ISBLANK ( _current ) && NOT ISBLANK ( _prior ), _current - _prior )
+
+
+// ---- Item 3: YoY % ----------------------------------------------------------
+VAR _current = SELECTEDMEASURE ()
+VAR _prior   = CALCULATE ( SELECTEDMEASURE (), SAMEPERIODLASTYEAR ( 'Date'[Date] ) )
+RETURN
+    IF (
+        NOT ISBLANK ( _current ) && NOT ISBLANK ( _prior ),
+        DIVIDE ( _current - _prior, _prior )
+    )
+// Format string expression for this item:
+"0.0%"
+
+
+// ---- Item 4: YTD ------------------------------------------------------------
+CALCULATE ( SELECTEDMEASURE (), DATESYTD ( 'Date'[Date] ) )
+
+
+// ---- Item 5: Rolling 3M ------------------------------------------------------
+CALCULATE (
+    SELECTEDMEASURE (),
+    DATESINPERIOD ( 'Date'[Date], MAX ( 'Date'[Date] ), -3, MONTH )
+)
+// Caveat: for ratio measures (Profit Margin %, Avg Order Value) "YoY %" is a
+// relative change of a ratio. Usually you want the change in points instead,
+// which is what [Margin Change (pts)] in file 02 shows.

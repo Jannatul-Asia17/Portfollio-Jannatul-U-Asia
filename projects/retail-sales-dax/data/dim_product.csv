@@ -1,0 +1,124 @@
+ProductID,ProductName,SubCategory,Category,ListPrice,UnitCost
+P-0001,Northwind Ergo Task Chair,Chairs,Furniture,445.6,320.16
+P-0002,Fabrikam Ergo Task Chair,Chairs,Furniture,210.97,156.34
+P-0003,Vertex Ergo Task Chair,Chairs,Furniture,542.4,391.01
+P-0004,Lumen Mesh Office Chair,Chairs,Furniture,531.51,364.09
+P-0005,Orbit Mesh Office Chair,Chairs,Furniture,612.36,437.73
+P-0006,Northwind Mesh Office Chair,Chairs,Furniture,171.16,126.33
+P-0007,Northwind Executive Leather Chair,Chairs,Furniture,334.64,252.88
+P-0008,Vertex Executive Leather Chair,Chairs,Furniture,521.59,372.04
+P-0009,Apex Executive Leather Chair,Chairs,Furniture,337.43,254.05
+P-0010,Lumen Stacking Chair,Chairs,Furniture,453.34,340.7
+P-0011,Fabrikam Stacking Chair,Chairs,Furniture,103.01,75.95
+P-0012,Apex Stacking Chair,Chairs,Furniture,139.54,103.57
+P-0013,Apex Conference Table,Tables,Furniture,743.04,585.09
+P-0014,Fabrikam Conference Table,Tables,Furniture,674.4,522.63
+P-0015,Northwind Conference Table,Tables,Furniture,217.88,180.68
+P-0016,Northwind Adjustable Standing Desk,Tables,Furniture,392.73,328.91
+P-0017,Apex Adjustable Standing Desk,Tables,Furniture,1091.85,895.74
+P-0018,Orbit Adjustable Standing Desk,Tables,Furniture,958.05,772.63
+P-0019,Vertex Round Meeting Table,Tables,Furniture,751.33,604.61
+P-0020,Apex Round Meeting Table,Tables,Furniture,575.77,453.3
+P-0021,Orbit Round Meeting Table,Tables,Furniture,329.07,264.2
+P-0022,Contoso 5-Shelf Bookcase,Bookcases,Furniture,300.63,221.37
+P-0023,Orbit 5-Shelf Bookcase,Bookcases,Furniture,293.16,214.72
+P-0024,Fabrikam 5-Shelf Bookcase,Bookcases,Furniture,447.01,323.82
+P-0025,Vertex Corner Bookcase,Bookcases,Furniture,296.28,223.33
+P-0026,Fabrikam Corner Bookcase,Bookcases,Furniture,409.2,298.37
+P-0027,Apex Corner Bookcase,Bookcases,Furniture,347.92,262.41
+P-0028,Lumen Barrister Bookcase,Bookcases,Furniture,374.66,284.55
+P-0029,Apex Barrister Bookcase,Bookcases,Furniture,446.81,329.49
+P-0030,Northwind Barrister Bookcase,Bookcases,Furniture,415.21,324.79
+P-0031,Northwind Desk Lamp,Furnishings,Furniture,15.35,8.71
+P-0032,Apex Desk Lamp,Furnishings,Furniture,95.03,51.61
+P-0033,Orbit Desk Lamp,Furnishings,Furniture,84.54,47.31
+P-0034,Vertex Wall Clock,Furnishings,Furniture,110.79,58.88
+P-0035,Northwind Wall Clock,Furnishings,Furniture,91.09,47.67
+P-0036,Fabrikam Wall Clock,Furnishings,Furniture,46.82,25.77
+P-0037,Vertex Frame Set,Furnishings,Furniture,26.18,13.78
+P-0038,Northwind Frame Set,Furnishings,Furniture,98.19,55.48
+P-0039,Orbit Frame Set,Furnishings,Furniture,62.12,35.32
+P-0040,Apex Desk Organizer,Furnishings,Furniture,11.89,6.38
+P-0041,Contoso Desk Organizer,Furnishings,Furniture,52.19,29.77
+P-0042,Vertex Desk Organizer,Furnishings,Furniture,80.29,42.6
+P-0043,Northwind Ring Binder,Binders,Office Supplies,6.77,3.26
+P-0044,Vertex Ring Binder,Binders,Office Supplies,40.41,21.04
+P-0045,Fabrikam Ring Binder,Binders,Office Supplies,30.83,16.11
+P-0046,Orbit Presentation Binder,Binders,Office Supplies,53.36,26.95
+P-0047,Contoso Presentation Binder,Binders,Office Supplies,27.86,14.04
+P-0048,Northwind Presentation Binder,Binders,Office Supplies,51.56,25.28
+P-0049,Lumen Heavy-Duty Binder,Binders,Office Supplies,11.8,6.03
+P-0050,Orbit Heavy-Duty Binder,Binders,Office Supplies,25.41,12.23
+P-0051,Contoso Heavy-Duty Binder,Binders,Office Supplies,44.08,21.52
+P-0052,Contoso Copy Paper Ream,Paper,Office Supplies,39.22,20.57
+P-0053,Vertex Copy Paper Ream,Paper,Office Supplies,16.03,8.26
+P-0054,Northwind Copy Paper Ream,Paper,Office Supplies,43.39,23.48
+P-0055,Northwind Cardstock Pack,Paper,Office Supplies,21.48,10.82
+P-0056,Orbit Cardstock Pack,Paper,Office Supplies,31.03,16.6
+P-0057,Apex Cardstock Pack,Paper,Office Supplies,8.8,4.4
+P-0058,Contoso Notebook Set,Paper,Office Supplies,27.01,13.8
+P-0059,Northwind Notebook Set,Paper,Office Supplies,25.26,12.77
+P-0060,Orbit Notebook Set,Paper,Office Supplies,12.48,6.28
+P-0061,Fabrikam File Cabinet,Storage,Office Supplies,230.76,153.88
+P-0062,Northwind File Cabinet,Storage,Office Supplies,158.89,107.44
+P-0063,Lumen File Cabinet,Storage,Office Supplies,31.15,21.44
+P-0064,Fabrikam Storage Box Set,Storage,Office Supplies,128.41,85.32
+P-0065,Orbit Storage Box Set,Storage,Office Supplies,258.52,166.07
+P-0066,Apex Storage Box Set,Storage,Office Supplies,289.74,193.24
+P-0067,Vertex Rolling Cart,Storage,Office Supplies,125.83,81.47
+P-0068,Apex Rolling Cart,Storage,Office Supplies,271.71,175.65
+P-0069,Northwind Rolling Cart,Storage,Office Supplies,158.39,105.05
+P-0070,Lumen Marker Set,Art,Office Supplies,25.24,12.63
+P-0071,Apex Marker Set,Art,Office Supplies,30.18,15.79
+P-0072,Orbit Marker Set,Art,Office Supplies,14.48,7.38
+P-0073,Lumen Colored Pencils,Art,Office Supplies,5.36,2.76
+P-0074,Orbit Colored Pencils,Art,Office Supplies,39.14,19.29
+P-0075,Northwind Colored Pencils,Art,Office Supplies,14.77,7.75
+P-0076,Apex Sketch Pad,Art,Office Supplies,26.18,13.49
+P-0077,Orbit Sketch Pad,Art,Office Supplies,39.17,19.59
+P-0078,Vertex Sketch Pad,Art,Office Supplies,38.04,19.36
+P-0079,Vertex Desk Fan,Appliances,Office Supplies,219.03,138.63
+P-0080,Fabrikam Desk Fan,Appliances,Office Supplies,175.57,109.28
+P-0081,Orbit Desk Fan,Appliances,Office Supplies,43.31,27.54
+P-0082,Northwind Paper Shredder,Appliances,Office Supplies,331.49,216.9
+P-0083,Contoso Paper Shredder,Appliances,Office Supplies,196.0,122.13
+P-0084,Lumen Paper Shredder,Appliances,Office Supplies,169.53,108.36
+P-0085,Vertex Mini Fridge,Appliances,Office Supplies,39.04,24.17
+P-0086,Orbit Mini Fridge,Appliances,Office Supplies,164.89,106.63
+P-0087,Apex Mini Fridge,Appliances,Office Supplies,105.96,67.47
+P-0088,Vertex Smartphone,Phones,Technology,647.18,461.32
+P-0089,Lumen Smartphone,Phones,Technology,266.06,194.0
+P-0090,Orbit Smartphone,Phones,Technology,384.2,272.03
+P-0091,Orbit Conference Phone,Phones,Technology,195.97,133.09
+P-0092,Lumen Conference Phone,Phones,Technology,795.56,568.94
+P-0093,Apex Conference Phone,Phones,Technology,136.19,92.24
+P-0094,Lumen Cordless Phone,Phones,Technology,852.56,611.26
+P-0095,Contoso Cordless Phone,Phones,Technology,448.37,301.56
+P-0096,Orbit Cordless Phone,Phones,Technology,863.04,616.45
+P-0097,Northwind Wireless Mouse,Accessories,Technology,73.24,40.61
+P-0098,Vertex Wireless Mouse,Accessories,Technology,42.1,22.19
+P-0099,Contoso Wireless Mouse,Accessories,Technology,14.86,8.18
+P-0100,Orbit Keyboard,Accessories,Technology,43.98,24.43
+P-0101,Northwind Keyboard,Accessories,Technology,57.16,31.06
+P-0102,Lumen Keyboard,Accessories,Technology,169.92,93.15
+P-0103,Fabrikam USB Hub,Accessories,Technology,123.18,68.9
+P-0104,Orbit USB Hub,Accessories,Technology,123.5,68.75
+P-0105,Lumen USB Hub,Accessories,Technology,26.82,15.45
+P-0106,Northwind Headset,Accessories,Technology,147.77,84.81
+P-0107,Apex Headset,Accessories,Technology,129.78,67.95
+P-0108,Contoso Headset,Accessories,Technology,95.2,49.95
+P-0109,Lumen Laser Printer,Machines,Technology,474.31,333.71
+P-0110,Fabrikam Laser Printer,Machines,Technology,884.95,628.31
+P-0111,Vertex Laser Printer,Machines,Technology,567.1,417.73
+P-0112,Apex 3D Printer,Machines,Technology,332.19,252.99
+P-0113,Contoso 3D Printer,Machines,Technology,1260.17,935.27
+P-0114,Northwind 3D Printer,Machines,Technology,216.36,155.1
+P-0115,Fabrikam Copier,Machines,Technology,453.91,346.05
+P-0116,Lumen Copier,Machines,Technology,1288.72,994.2
+P-0117,Northwind Copier,Machines,Technology,1342.8,945.74
+P-0118,Lumen Multifunction Copier,Copiers,Technology,953.68,610.95
+P-0119,Apex Multifunction Copier,Copiers,Technology,1783.67,1123.36
+P-0120,Vertex Multifunction Copier,Copiers,Technology,528.16,327.37
+P-0121,Lumen High-Speed Copier,Copiers,Technology,1230.42,760.66
+P-0122,Orbit High-Speed Copier,Copiers,Technology,1500.17,915.04
+P-0123,Vertex High-Speed Copier,Copiers,Technology,704.59,430.43

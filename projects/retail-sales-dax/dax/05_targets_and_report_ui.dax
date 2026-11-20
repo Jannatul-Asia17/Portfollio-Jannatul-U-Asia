@@ -1,0 +1,124 @@
+// =============================================================================
+// 05 · Targets & report UI            Display folders: 6 Targets / 7 Report UI
+// -----------------------------------------------------------------------------
+// Targets are set per Month x Region x Category, coarser than the sales
+// data, so the table is NOT related to the model. Instead, the measure copies
+// the current filters onto it with TREATAS (a "virtual relationship").
+// This keeps the model a clean star schema and avoids many-to-many relationships.
+// =============================================================================
+DEFINE
+    MEASURE _Measures[Sales Target] =
+        CALCULATE (
+            SUM ( Targets[SalesTarget] ),
+            TREATAS ( VALUES ( DimGeography[Region] ), Targets[Region] ),
+            TREATAS ( VALUES ( DimProduct[Category] ), Targets[Category] ),
+            TREATAS ( VALUES ( 'Date'[Month Start] ), Targets[MonthStart] )
+        )
+    // Valid at Month / Quarter / Year and Region / Category level. Below that
+    // grain (a single day, city or product) a target has no meaning, so the
+    // dashboard never puts it on such visuals.
+
+    MEASURE _Measures[Target Variance] =
+        VAR _target = [Sales Target]
+        RETURN IF ( NOT ISBLANK ( _target ), [Total Sales] - _target )
+
+    MEASURE _Measures[% of Target] =
+        DIVIDE ( [Total Sales], [Sales Target] )
+
+    MEASURE _Measures[Target Status] =
+        VAR _pct = [% of Target]
+        RETURN
+            SWITCH (
+                TRUE (),
+                ISBLANK ( _pct ), BLANK (),
+                _pct >= 1,        "On target",
+                _pct >= 0.95,     "Close",
+                "Behind"
+            )
+
+    // --- Conditional formatting ----------------------------------------------
+    // Use in Format > Cell elements / Font colour > fx > Field value.
+    MEASURE _Measures[Target Status Color] =
+        VAR _pct = [% of Target]
+        RETURN
+            SWITCH (
+                TRUE (),
+                ISBLANK ( _pct ), BLANK (),
+                _pct >= 1,        "#1A7F5A",   // green
+                _pct >= 0.95,     "#B7791F",   // amber
+                "#C0392B"                      // red
+            )
+
+    MEASURE _Measures[YoY Color] =
+        VAR _yoy = [Sales YoY %]
+        RETURN IF ( ISBLANK ( _yoy ), BLANK (), IF ( _yoy >= 0, "#1A7F5A", "#C0392B" ) )
+
+    // --- Dynamic titles ------------------------------------------------------
+    // Visual title > fx > Field value. The title then says what is filtered,
+    // so a screenshot pasted in an email still makes sense.
+    MEASURE _Measures[Title Sales Trend] =
+        VAR _regions =
+            IF (
+                ISFILTERED ( DimGeography[Region] ),
+                CONCATENATEX ( VALUES ( DimGeography[Region] ), DimGeography[Region], ", ", DimGeography[Region], ASC ),
+                "All regions"
+            )
+        VAR _category = SELECTEDVALUE ( DimProduct[Category], "All categories" )
+        RETURN "Monthly sales · " & _regions & " · " & _category
+
+    // --- Auto-written headline (a home-made "smart narrative") --------------
+    MEASURE _Measures[Headline Insight] =
+        VAR _sales = [Total Sales]
+        VAR _yoy = [Sales YoY %]
+        VAR _topRegion =
+            MAXX ( TOPN ( 1, ALLSELECTED ( DimGeography[Region] ), [Total Sales] ), DimGeography[Region] )
+        // Skip sub-categories with no sales: their BLANK margin would sort first
+        VAR _worstSub =
+            MINX (
+                TOPN (
+                    1,
+                    FILTER ( ALLSELECTED ( DimProduct[SubCategory] ), NOT ISBLANK ( [Total Sales] ) ),
+                    [Profit Margin %], ASC
+                ),
+                DimProduct[SubCategory]
+            )
+        VAR _yoyText =
+            IF (
+                ISBLANK ( _yoy ),
+                "",
+                ", " & IF ( _yoy >= 0, "up ", "down " ) & FORMAT ( ABS ( _yoy ), "0.0%" ) & " on last year"
+            )
+        RETURN
+            "Sales of " & FORMAT ( _sales, "$#,0" ) & _yoyText & ". "
+                & _topRegion & " is the largest region; "
+                & _worstSub & " has the thinnest margin."
+
+// ---- Test query 1: target attainment by year (expected_results.md section 9)
+EVALUATE
+SUMMARIZECOLUMNS (
+    'Date'[Year],
+    "Total Sales",     [Total Sales],
+    "Sales Target",    [Sales Target],
+    "Target Variance", [Target Variance],
+    "% of Target",     [% of Target],
+    "Target Status",   [Target Status]
+)
+ORDER BY 'Date'[Year]
+
+// ---- Test query 2: 2025 by region ------------------------------------------
+EVALUATE
+SUMMARIZECOLUMNS (
+    DimGeography[Region],
+    TREATAS ( { 2025 }, 'Date'[Year] ),
+    "Total Sales",  [Total Sales],
+    "Sales Target", [Sales Target],
+    "% of Target",  [% of Target]
+)
+ORDER BY DimGeography[Region]
+
+// ---- Test query 3: the headline for 2025 -----------------------------------
+EVALUATE
+CALCULATETABLE (
+    ROW ( "Headline Insight", [Headline Insight] ),
+    'Date'[Year] = 2025
+)

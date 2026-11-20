@@ -1,0 +1,75 @@
+// =============================================================================
+// 01 · Base measures                                   Display folder: 1 Base
+// -----------------------------------------------------------------------------
+// HOW TO USE: open DAX query view, paste this whole file, press Run to see the
+// test results (compare with docs/expected_results.md, section 1 & 2), then
+// click "Update model with changes" to save every measure into _Measures.
+//
+// Rule of thumb: build everything from a few simple base measures. Later
+// measures reuse them, so a definition (e.g. "what is Sales?") lives in
+// exactly one place.
+// =============================================================================
+DEFINE
+    // --- Money -------------------------------------------------------------
+    MEASURE _Measures[Total Sales] = SUM ( FactSales[Sales] )
+    MEASURE _Measures[Total Cost] = SUM ( FactSales[Cost] )
+    MEASURE _Measures[Total Profit] = [Total Sales] - [Total Cost]
+    MEASURE _Measures[Profit Margin %] = DIVIDE ( [Total Profit], [Total Sales] )
+    // DIVIDE returns BLANK instead of an error when the denominator is 0
+
+    // --- Discounts ---------------------------------------------------------
+    MEASURE _Measures[Gross Sales] = SUM ( FactSales[GrossSales] )     // list price x qty
+    MEASURE _Measures[Discount Amount] = [Gross Sales] - [Total Sales]
+    MEASURE _Measures[Discount %] = DIVIDE ( [Discount Amount], [Gross Sales] )
+    // Weighted by value. AVERAGE ( FactSales[Discount] ) would treat a $5 pen
+    // and a $1,500 printer as equally important.
+
+    // --- Volume ------------------------------------------------------------
+    MEASURE _Measures[Orders] = DISTINCTCOUNT ( FactSales[OrderID] )   // grain is order LINE
+    MEASURE _Measures[Units Sold] = SUM ( FactSales[Quantity] )
+    MEASURE _Measures[Customers] = DISTINCTCOUNT ( FactSales[CustomerID] )
+    MEASURE _Measures[Avg Order Value] = DIVIDE ( [Total Sales], [Orders] )
+    MEASURE _Measures[Sales per Customer] = DIVIDE ( [Total Sales], [Customers] )
+    MEASURE _Measures[Avg Days to Ship] = AVERAGE ( FactSales[Days to Ship] )
+
+    // --- Returns: a VIRTUAL relationship -----------------------------------
+    // Returns has no relationship to FactSales. TREATAS takes the returned
+    // OrderIDs and applies them as a filter on FactSales[OrderID], so the
+    // result still respects every slicer on the page (region, date, ...).
+    MEASURE _Measures[Returned Orders] =
+        CALCULATE (
+            [Orders],
+            TREATAS ( VALUES ( Returns[OrderID] ), FactSales[OrderID] )
+        )
+    MEASURE _Measures[Returned Sales] =
+        CALCULATE (
+            [Total Sales],
+            TREATAS ( VALUES ( Returns[OrderID] ), FactSales[OrderID] )
+        )
+    MEASURE _Measures[Return Rate %] = DIVIDE ( [Returned Orders], [Orders] )
+
+// ---- Test query 1: KPI cards (expected_results.md section 1) ---------------
+EVALUATE
+ROW (
+    "Total Sales",     [Total Sales],
+    "Total Profit",    [Total Profit],
+    "Profit Margin %", [Profit Margin %],
+    "Orders",          [Orders],
+    "Units Sold",      [Units Sold],
+    "Customers",       [Customers],
+    "Avg Order Value", [Avg Order Value],
+    "Discount %",      [Discount %],
+    "Return Rate %",   [Return Rate %]
+)
+
+// ---- Test query 2: by region (section 4) ----------------------------------
+EVALUATE
+SUMMARIZECOLUMNS (
+    DimGeography[Region],
+    "Total Sales",     [Total Sales],
+    "Total Profit",    [Total Profit],
+    "Profit Margin %", [Profit Margin %],
+    "Discount %",      [Discount %],
+    "Return Rate %",   [Return Rate %]
+)
+ORDER BY [Total Sales] DESC

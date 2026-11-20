@@ -1,0 +1,122 @@
+// =============================================================================
+// 02 · Time intelligence                       Display folder: 2 Time Intelligence
+// -----------------------------------------------------------------------------
+// Requires the 'Date' table from file 00, marked as a date table and related
+// to FactSales[OrderDate]. Every function here moves the DATE filter
+// (to last year, to the start of the year, ...) and re-evaluates a base measure.
+// =============================================================================
+DEFINE
+    // --- Year over year ----------------------------------------------------
+    MEASURE _Measures[Sales PY] =
+        CALCULATE ( [Total Sales], SAMEPERIODLASTYEAR ( 'Date'[Date] ) )
+
+    // Only show a change when BOTH periods have data. Otherwise the first year
+    // would show a meaningless +100% / -100%.
+    MEASURE _Measures[Sales YoY] =
+        VAR _current = [Total Sales]
+        VAR _prior   = [Sales PY]
+        RETURN
+            IF ( NOT ISBLANK ( _current ) && NOT ISBLANK ( _prior ), _current - _prior )
+
+    MEASURE _Measures[Sales YoY %] =
+        VAR _current = [Total Sales]
+        VAR _prior   = [Sales PY]
+        RETURN
+            IF (
+                NOT ISBLANK ( _current ) && NOT ISBLANK ( _prior ),
+                DIVIDE ( _current - _prior, _prior )
+            )
+
+    MEASURE _Measures[Profit PY] =
+        CALCULATE ( [Total Profit], SAMEPERIODLASTYEAR ( 'Date'[Date] ) )
+
+    MEASURE _Measures[Profit YoY %] =
+        VAR _current = [Total Profit]
+        VAR _prior   = [Profit PY]
+        RETURN
+            IF (
+                NOT ISBLANK ( _current ) && NOT ISBLANK ( _prior ),
+                DIVIDE ( _current - _prior, _prior )
+            )
+
+    // A ratio's change is measured in percentage POINTS, not percent
+    MEASURE _Measures[Margin Change (pts)] =
+        VAR _current = [Profit Margin %]
+        VAR _prior   = CALCULATE ( [Profit Margin %], SAMEPERIODLASTYEAR ( 'Date'[Date] ) )
+        RETURN
+            IF ( NOT ISBLANK ( _current ) && NOT ISBLANK ( _prior ), _current - _prior )
+
+    // --- Period to date ----------------------------------------------------
+    MEASURE _Measures[Sales YTD] = TOTALYTD ( [Total Sales], 'Date'[Date] )
+    MEASURE _Measures[Sales QTD] = TOTALQTD ( [Total Sales], 'Date'[Date] )
+    MEASURE _Measures[Sales MTD] = TOTALMTD ( [Total Sales], 'Date'[Date] )
+    MEASURE _Measures[Sales PYTD] =
+        CALCULATE ( [Sales YTD], SAMEPERIODLASTYEAR ( 'Date'[Date] ) )
+
+    // --- Month over month --------------------------------------------------
+    MEASURE _Measures[Sales PM] =
+        CALCULATE ( [Total Sales], DATEADD ( 'Date'[Date], -1, MONTH ) )
+
+    MEASURE _Measures[Sales MoM %] =
+        VAR _current = [Total Sales]
+        VAR _prior   = [Sales PM]
+        RETURN
+            IF (
+                NOT ISBLANK ( _current ) && NOT ISBLANK ( _prior ),
+                DIVIDE ( _current - _prior, _prior )
+            )
+
+    // --- Smoothing & cumulative --------------------------------------------
+    // Last 3 months ending on the last visible date. This smooths out the
+    // spiky months on a trend line.
+    MEASURE _Measures[Sales Rolling 3M] =
+        CALCULATE (
+            [Total Sales],
+            DATESINPERIOD ( 'Date'[Date], MAX ( 'Date'[Date] ), -3, MONTH )
+        )
+
+    // All-time running total: remove the date filter, then keep every date up
+    // to the last one visible in the current cell.
+    MEASURE _Measures[Sales Running Total] =
+        VAR _lastVisibleDate = MAX ( 'Date'[Date] )
+        RETURN
+            CALCULATE (
+                [Total Sales],
+                REMOVEFILTERS ( 'Date' ),
+                'Date'[Date] <= _lastVisibleDate
+            )
+
+    // --- Role-playing date: ship date instead of order date ----------------
+    // The ShipDate relationship is inactive (a table can have only one active
+    // path to 'Date'). USERELATIONSHIP switches it on for this measure only.
+    MEASURE _Measures[Sales by Ship Date] =
+        CALCULATE (
+            [Total Sales],
+            USERELATIONSHIP ( FactSales[ShipDate], 'Date'[Date] )
+        )
+
+// ---- Test query 1: by year (expected_results.md section 2) -----------------
+EVALUATE
+SUMMARIZECOLUMNS (
+    'Date'[Year],
+    "Total Sales",        [Total Sales],
+    "Sales PY",           [Sales PY],
+    "Sales YoY %",        [Sales YoY %],
+    "Total Profit",       [Total Profit],
+    "Profit YoY %",       [Profit YoY %],
+    "Margin Change (pts)",[Margin Change (pts)],
+    "Sales by Ship Date", [Sales by Ship Date]
+)
+ORDER BY 'Date'[Year]
+
+// ---- Test query 2: monthly 2025 (section 3) --------------------------------
+EVALUATE
+SUMMARIZECOLUMNS (
+    'Date'[Year Month],
+    TREATAS ( { 2025 }, 'Date'[Year] ),
+    "Total Sales",      [Total Sales],
+    "Sales YTD",        [Sales YTD],
+    "Sales Rolling 3M", [Sales Rolling 3M],
+    "Sales MoM %",      [Sales MoM %]
+)
+ORDER BY 'Date'[Year Month]

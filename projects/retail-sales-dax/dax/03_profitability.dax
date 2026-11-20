@@ -1,0 +1,99 @@
+// =============================================================================
+// 03 · Profitability & discounts                   Display folder: 3 Profitability
+// -----------------------------------------------------------------------------
+// Business question: where are we losing margin, and how much do deep
+// discounts cost us?
+// =============================================================================
+DEFINE
+    // --- Iterating over a VIRTUAL table ------------------------------------
+    // VALUES ( FactSales[OrderID] ) = the orders visible in the current filter.
+    // FILTER evaluates [Total Profit] once per order; calling a measure inside
+    // an iterator triggers CONTEXT TRANSITION, so each row filters to that one
+    // order.
+    MEASURE _Measures[Loss-making Orders] =
+        COUNTROWS (
+            FILTER ( VALUES ( FactSales[OrderID] ), [Total Profit] < 0 )
+        )
+
+    MEASURE _Measures[Loss-making Orders %] =
+        DIVIDE ( [Loss-making Orders], [Orders] )
+
+    MEASURE _Measures[Products at a Loss] =
+        COUNTROWS (
+            FILTER ( VALUES ( DimProduct[ProductID] ), [Total Profit] < 0 )
+        )
+
+    // --- Deep discounts (> 20%) ---------------------------------------------
+    // A simple column predicate inside CALCULATE adds to the existing filters.
+    MEASURE _Measures[Deep-Discount Sales] =
+        CALCULATE ( [Total Sales], FactSales[Discount] > 0.20 )
+
+    MEASURE _Measures[Deep-Discount Sales %] =
+        DIVIDE ( [Deep-Discount Sales], [Total Sales] )
+
+    MEASURE _Measures[Profit at Deep Discount] =
+        CALCULATE ( [Total Profit], FactSales[Discount] > 0.20 )
+
+    // --- Benchmarking -------------------------------------------------------
+    // Margin of the current cell minus the margin of everything selected on
+    // the page. ALLSELECTED keeps slicers but ignores the visual's own rows.
+    MEASURE _Measures[Margin vs Average (pts)] =
+        [Profit Margin %] - CALCULATE ( [Profit Margin %], ALLSELECTED () )
+
+    // --- What-if: cap every discount at the value chosen in a slicer --------
+    MEASURE _Measures[Discount Cap Value] =
+        SELECTEDVALUE ( 'Discount Cap'[Discount Cap], 0.50 )
+
+    // SUMX iterates row by row, because the cap must be applied to each line
+    // BEFORE summing. Assumes customers would still have bought at the lower
+    // discount, so treat the result as an upper bound.
+    MEASURE _Measures[Simulated Profit] =
+        VAR _cap = [Discount Cap Value]
+        RETURN
+            SUMX (
+                FactSales,
+                FactSales[GrossSales] * ( 1 - MIN ( FactSales[Discount], _cap ) )
+                    - FactSales[Cost]
+            )
+
+    MEASURE _Measures[Profit Uplift from Cap] =
+        [Simulated Profit] - [Total Profit]
+
+// ---- Test query 1: profitability cards (section 6b) ------------------------
+EVALUATE
+ROW (
+    "Loss-making Orders",      [Loss-making Orders],
+    "Loss-making Orders %",    [Loss-making Orders %],
+    "Deep-Discount Sales %",   [Deep-Discount Sales %],
+    "Profit at Deep Discount", [Profit at Deep Discount]
+)
+
+// ---- Test query 2: what-if at each cap level (section 6b) ------------------
+EVALUATE
+SUMMARIZECOLUMNS (
+    'Discount Cap'[Discount Cap],
+    "Simulated Profit",       [Simulated Profit],
+    "Profit Uplift from Cap", [Profit Uplift from Cap]
+)
+ORDER BY 'Discount Cap'[Discount Cap] DESC
+
+// ---- Test query 3: margin by discount band (section 6) ---------------------
+EVALUATE
+SUMMARIZECOLUMNS (
+    FactSales[Discount Band],
+    FactSales[Discount Band Sort],
+    "Total Sales",     [Total Sales],
+    "Total Profit",    [Total Profit],
+    "Profit Margin %", [Profit Margin %]
+)
+ORDER BY FactSales[Discount Band Sort]
+
+// ---- Test query 4: Category x Region margin matrix (section 5) -------------
+EVALUATE
+SUMMARIZECOLUMNS (
+    DimProduct[Category],
+    DimGeography[Region],
+    "Profit Margin %",         [Profit Margin %],
+    "Margin vs Average (pts)", [Margin vs Average (pts)]
+)
+ORDER BY DimProduct[Category], DimGeography[Region]
